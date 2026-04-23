@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrepPro — Placement Preparation Portal</title>
+  <meta name="description" content="Premium placement prep portal — DSA, Aptitude, Coding, Interview & Resume. Built for campus placement success.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+</head>
+<body>
+
+<!-- ─── Custom Cursor Glow ─────────────────────────────── -->
+<div id="cursor-glow"></div>
+
+<!-- ─── Page Transition Overlay ───────────────────────── -->
+<div id="page-transition"></div>
+
+<!-- ─── Confetti Canvas ────────────────────────────────── -->
+<canvas id="confetti-canvas"></canvas>
+
+<!-- ─── Ambient Background Blobs ──────────────────────── -->
+<div class="ambient-blob ambient-blob-1"></div>
+<div class="ambient-blob ambient-blob-2"></div>
+
+<!-- ─── Canvas Particles Background ──────────────────── -->
+<canvas id="particles-canvas"></canvas>
+
+<!-- ─── Toast Container ──────────────────────────────── -->
+<div id="toast-container"></div>
+
+<!-- ─── Loading Screen ─────────────────────────────────── -->
+<div id="loading-screen">
+  <div class="loader-logo">PrepPro</div>
+  <div class="loader-sub">Initializing workspace...</div>
+  <div class="loader-bar">
+    <div class="loader-fill"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     LANDING PAGE
+     ═══════════════════════════════════════════════════════ -->
+<div id="landing-page">
+
+  <!-- Onboarding Modal -->
+  <div class="modal-overlay" id="onboard-modal" style="display:none">
+    <div class="modal">
+      <span class="modal-icon">🚀</span>
+      <h2>Welcome to PrepPro</h2>
+      <p>Your AI-powered companion for campus placement success. Let's personalize your experience.</p>
+      <div style="text-align:left;margin-bottom:20px">
+        <div class="form-group">
+          <label class="form-label">Your Full Name *</label>
+          <input type="text" class="form-input" id="onboard-name" placeholder="e.g. Priya Sharma" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">College / University</label>
+          <input type="text" class="form-input" id="onboard-college" placeholder="e.g. IIT Delhi, Sharda University">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Target Company Type</label>
+          <select class="form-input" id="onboard-goal" style="cursor:pointer">
+            <option value="">Select your goal</option>
+            <option value="product">Product Companies (FAANG, Startups)</option>
+            <option value="service">Service Companies (TCS, Infosys, Wipro)</option>
+            <option value="both">Both</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;font-size:1rem;padding:14px" onclick="submitOnboarding()">
+        Launch My Dashboard 🎯
+      </button>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="landing-nav">
+    <div class="nav-logo">PrepPro</div>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#dsa">DSA</a></li>
+      <li><a href="#aptitude">Aptitude</a></li>
+      <li><a href="#resume">Resume</a></li>
+    </ul>
+    <div class="nav-cta">
+      <button class="btn btn-secondary btn-sm" onclick="showOnboardingFromLanding()">Sign In</button>
+      <button class="btn btn-primary btn-sm" onclick="showOnboardingFromLanding()">Get Started Free</button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-glow hero-glow-1"></div>
+    <div class="hero-glow hero-glow-2"></div>
+
+    <div class="hero-badge">
+      <span class="dot"></span>
+      PrepPro v3.0 — Now with Smart Recommendations
+    </div>
+
+    <h1 class="hero-title">
+      Crack Your Dream<br>
+      <span class="gradient-text">Placement in 90 Days</span>
+    </h1>
+
+    <p class="hero-subtitle">
+      The only placement prep portal that combines DSA learning, aptitude quizzes,
+      coding practice, mock interviews, and resume building — all in one premium, connected experience.
+    </p>
+
+    <div class="hero-actions">
+      <button class="btn btn-primary" onclick="showOnboardingFromLanding()" style="padding:14px 36px;font-size:1rem">
+        🚀 Start Preparing Free
+      </button>
+      <button class="btn btn-secondary" onclick="showOnboardingFromLanding()" style="padding:14px 36px;font-size:1rem">
+        👀 See Dashboard
+      </button>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item"><span class="stat-number">25+</span><span class="stat-label">DSA Videos</span></div>
+      <div class="stat-item"><span class="stat-number">200+</span><span class="stat-label">Quiz Questions</span></div>
+      <div class="stat-item"><span class="stat-number">7</span><span class="stat-label">Coding Problems</span></div>
+      <div class="stat-item"><span class="stat-number">12</span><span class="stat-label">Companies</span></div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section" id="features">
+    <div class="section-header">
+      <span class="section-label">What's Inside</span>
+      <h2 class="section-title">Everything You Need to<br>Land Your Dream Job</h2>
+    </div>
+    <div class="features-grid">
+      <div class="glass-card feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>DSA Learning Path</h3>
+        <p>Curated Kunal Kushwaha playlist organized by topics. Track completion, bookmark videos, and monitor progress.</p>
+      </div>
+      <div class="glass-card feature-card">
+        <div class="feature-icon">🧮</div>
+        <h3>Timed Aptitude Quizzes</h3>
+        <p>Quant, Logical, Verbal & Technical MCQs with countdown timer. Instant scoring with detailed explanations.</p>
+      </div>
+      <div class="glass-card feature-card">
+        <div class="feature-icon">💻</div>
+        <h3>Coding Practice</h3>
+        <p>Classic interview problems with a built-in code editor. Hints, sample outputs, and difficulty ratings.</p>
+      </div>
+      <div class="glass-card feature-card">
+        <div class="feature-icon">🎤</div>
+        <h3>Interview Preparation</h3>
+        <p>Comprehensive HR + Technical + System Design FAQs with smart search and expandable answer cards.</p>
+      </div>
+      <div class="glass-card feature-card">
+        <div class="feature-icon">📄</div>
+        <h3>Resume Builder</h3>
+        <p>Live resume editor with real-time preview and PDF export. ATS-friendly template included.</p>
+      </div>
+      <div class="glass-card feature-card">
+        <div class="feature-icon">🏢</div>
+        <h3>Company Intelligence</h3>
+        <p>Profiles for 12 top companies including packages, DSA topics, and hiring patterns.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section style="text-align:center;padding:80px 40px;position:relative;z-index:1">
+    <div style="max-width:600px;margin:0 auto">
+      <h2 style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;margin-bottom:16px;letter-spacing:-0.03em">
+        Ready to Crack Your <span class="gradient-text">Placement?</span>
+      </h2>
+      <p style="color:var(--text-secondary);margin-bottom:36px;font-size:1.05rem">
+        Join thousands of students who used PrepPro to land jobs at Google, Microsoft, TCS, and more.
+      </p>
+      <button class="btn btn-primary" onclick="showOnboardingFromLanding()" style="padding:16px 48px;font-size:1.05rem">
+        🎯 Start Your Journey — It's Free
+      </button>
+    </div>
+  </section>
+
+  <footer style="text-align:center;padding:24px;border-top:1px solid var(--border-glass);color:var(--text-muted);font-size:0.8rem;position:relative;z-index:1">
+    Built with ❤️ by Gaurav Raja & Aditya Bhattacharya | Sharda University | PrepPro v3.0
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     MAIN APP
+     ═══════════════════════════════════════════════════════ -->
+<div id="app">
+
+  <!-- ─── Sidebar ────────────────────────────────────────── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon">P</div>
+      <span class="sidebar-logo-text">PrepPro</span>
+    </div>
+
+    <div class="sidebar-user">
+      <div class="user-avatar">?</div>
+      <div class="user-info">
+        <div class="user-name user-name-display">Student</div>
+        <div class="user-streak" id="streak-count">🔥 0 day streak</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section">Main</div>
+      <div class="sidebar-nav-item" data-section="dashboard" onclick="navigateTo('dashboard')">
+        <div class="nav-icon">📊</div><span>Dashboard</span>
+      </div>
+
+      <div class="nav-section">Prepare</div>
+      <div class="sidebar-nav-item" data-section="dsa" onclick="navigateTo('dsa')">
+        <div class="nav-icon">🎯</div><span>DSA Learning</span>
+      </div>
+      <div class="sidebar-nav-item" data-section="aptitude" onclick="navigateTo('aptitude')">
+        <div class="nav-icon">🧮</div><span>Aptitude Quiz</span>
+      </div>
+      <div class="sidebar-nav-item" data-section="coding" onclick="navigateTo('coding')">
+        <div class="nav-icon">💻</div><span>Coding Practice</span>
+      </div>
+      <div class="sidebar-nav-item" data-section="interview" onclick="navigateTo('interview')">
+        <div class="nav-icon">🎤</div><span>Interview Prep</span>
+      </div>
+
+      <div class="nav-section">Build</div>
+      <div class="sidebar-nav-item" data-section="resume" onclick="navigateTo('resume')">
+        <div class="nav-icon">📄</div><span>Resume Builder</span>
+      </div>
+      <div class="sidebar-nav-item" data-section="companies" onclick="navigateTo('companies')">
+        <div class="nav-icon">🏢</div><span>Company Intel</span>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="btn btn-ghost btn-sm" style="flex:1;justify-content:center" onclick="toggleTheme()">
+        <span id="theme-icon-sidebar">☀️</span> Theme
+      </button>
+    </div>
+  </aside>
+
+  <!-- ─── Top Bar ──────────────────────────────────────── -->
+  <header class="topbar">
+    <button class="hamburger" onclick="toggleSidebar()">
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="topbar-search">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" id="global-search"
+        placeholder="Search videos, problems, companies... (⌘K)">
+      <div class="search-results" id="search-results"></div>
+    </div>
+
+    <div class="topbar-actions">
+      <div style="font-size:0.82rem;color:var(--text-muted);font-family:'JetBrains Mono',monospace">
+        <span id="current-date"></span>
+      </div>
+      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+        <span id="theme-icon">☀️</span>
+      </button>
+    </div>
+
+    <div class="topbar-page-title" id="page-title">📊 Dashboard</div>
+  </header>
+
+  <!-- ─── Main Content ─────────────────────────────────── -->
+  <main class="main-content">
+
+    <!-- ══════════════════════════════════
+         DASHBOARD
+         ══════════════════════════════════ -->
+    <section class="section-page active" id="page-dashboard">
+
+      <div class="dashboard-greeting">
+        <h1 class="greeting-text">
+          <span id="greeting-text">Good morning</span>,
+          <span id="greeting-name" style="background:linear-gradient(135deg,var(--accent-cyan),var(--accent-purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent">Student</span>! 👋
+        </h1>
+        <p id="greeting-sub" class="greeting-sub">Track your placement preparation progress</p>
+      </div>
+
+      <!-- Stat Cards (4 columns) -->
+      <div class="dashboard-grid">
+        <div class="glass-card stat-card no-reveal" style="transition-delay:0.05s">
+          <span class="stat-card-icon">🎯</span>
+          <span class="stat-card-value" id="stat-videos">0</span>
+          <span class="stat-card-label">DSA Videos Completed</span>
+          <div class="stat-card-glow" style="background:var(--accent-cyan)"></div>
+        </div>
+        <div class="glass-card stat-card no-reveal" style="transition-delay:0.1s">
+          <span class="stat-card-icon">🧮</span>
+          <span class="stat-card-value" id="stat-quizzes">0</span>
+          <span class="stat-card-label">Quizzes Attempted</span>
+          <div class="stat-card-glow" style="background:var(--accent-purple)"></div>
+        </div>
+        <div class="glass-card stat-card no-reveal" style="transition-delay:0.15s">
+          <span class="stat-card-icon">💻</span>
+          <span class="stat-card-value" id="stat-problems">0</span>
+          <span class="stat-card-label">Problems Solved</span>
+          <div class="stat-card-glow" style="background:var(--accent-green)"></div>
+        </div>
+        <div class="glass-card stat-card no-reveal" style="transition-delay:0.2s">
+          <span class="stat-card-icon">🔥</span>
+          <span class="stat-card-value" id="stat-streak">0</span>
+          <span class="stat-card-label">Day Streak</span>
+          <div class="stat-card-glow" style="background:var(--accent-orange)"></div>
+        </div>
+      </div>
+
+      <!-- Dashboard bottom grid: Progress + Activity -->
+      <div class="dashboard-bottom">
+
+        <!-- Left: Progress + Streak -->
+        <div class="glass-card no-reveal">
+          <h3 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:20px;font-size:0.95rem;letter-spacing:0.02em">
+            📈 Learning Progress
+          </h3>
+          <div class="progress-list">
+            <div class="progress-item">
+              <div class="progress-header"><span>DSA Videos</span><span class="progress-pct" id="pct-dsa">0%</span></div>
+              <div class="progress-bar"><div class="progress-fill" id="progress-dsa"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-header"><span>Aptitude Quizzes</span><span class="progress-pct" id="pct-quiz">0%</span></div>
+              <div class="progress-bar"><div class="progress-fill" id="progress-quiz" style="background:linear-gradient(90deg,var(--accent-purple),var(--accent-pink))"></div></div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-header"><span>Coding Problems</span><span class="progress-pct" id="pct-coding">0%</span></div>
+              <div class="progress-bar"><div class="progress-fill" id="progress-coding" style="background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan))"></div></div>
+            </div>
+          </div>
+
+          <h3 style="font-family:'Syne',sans-serif;font-weight:700;margin:24px 0 12px;font-size:0.95rem">🔥 28-Day Activity</h3>
+          <div class="streak-grid" id="streak-grid"></div>
+          <div style="display:flex;gap:16px;margin-top:10px;font-size:0.72rem;color:var(--text-muted)">
+            <span style="display:flex;align-items:center;gap:5px">
+              <span style="width:10px;height:10px;background:linear-gradient(135deg,var(--accent-cyan),var(--accent-purple));border-radius:3px;display:inline-block"></span>Active
+            </span>
+            <span style="display:flex;align-items:center;gap:5px">
+              <span style="width:10px;height:10px;background:rgba(255,255,255,0.04);border:1px solid var(--border-glass);border-radius:3px;display:inline-block"></span>Inactive
+            </span>
+            <span style="display:flex;align-items:center;gap:5px">
+              <span style="width:10px;height:10px;border:1.5px solid var(--accent-orange);border-radius:3px;display:inline-block"></span>Today
+            </span>
+          </div>
+        </div>
+
+        <!-- Right: Activity Feed + Smart Recommendations -->
+        <div style="display:flex;flex-direction:column;gap:18px">
+
+          <div class="glass-card no-reveal">
+            <h3 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:14px;font-size:0.95rem">⚡ Recent Activity</h3>
+            <div id="activity-feed"></div>
+          </div>
+
+          <div class="glass-card no-reveal">
+            <h3 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:14px;font-size:0.95rem">💡 Recommended Next</h3>
+            <div id="recommendations-panel"></div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="glass-card no-reveal">
+            <h3 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:12px;font-size:0.95rem">🚀 Quick Actions</h3>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <button class="btn btn-secondary" onclick="navigateTo('dsa')" style="justify-content:flex-start;gap:10px">🎯 Continue DSA Learning</button>
+              <button class="btn btn-secondary" onclick="navigateTo('aptitude')" style="justify-content:flex-start;gap:10px">🧮 Take Aptitude Quiz</button>
+              <button class="btn btn-secondary" onclick="navigateTo('coding')" style="justify-content:flex-start;gap:10px">💻 Solve a Coding Problem</button>
+              <button class="btn btn-secondary" onclick="navigateTo('resume')" style="justify-content:flex-start;gap:10px">📄 Update Your Resume</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════
+         DSA LEARNING
+         ══════════════════════════════════ -->
+    <section class="section-page" id="page-dsa">
+
+      <div class="page-heading">
+        <h2>DSA Learning Path</h2>
+        <p>Structured video learning by Kunal Kushwaha — organized by topics</p>
+      </div>
+
+      <!-- Overall Progress -->
+      <div class="glass-card no-reveal dsa-overall-progress" style="margin-bottom:20px;padding:18px 22px">
+        <div class="dsa-progress-label">
+          <span id="dsa-progress-count" style="font-size:0.85rem;color:var(--text-secondary)">0 / 0 completed</span>
+          <span class="dsa-progress-pct" id="dsa-overall-pct">0%</span>
+        </div>
+        <div class="progress-bar" style="height:8px">
+          <div class="progress-fill" id="dsa-overall-fill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- Topic Tabs -->
+      <div class="topic-tabs-scroll">
+        <button class="topic-tab active" data-topic="arrays"     onclick="setDsaTopic('arrays')">📦 Arrays</button>
+        <button class="topic-tab"       data-topic="strings"     onclick="setDsaTopic('strings')">🔤 Strings</button>
+        <button class="topic-tab"       data-topic="linkedlist"  onclick="setDsaTopic('linkedlist')">🔗 Linked Lists</button>
+        <button class="topic-tab"       data-topic="recursion"   onclick="setDsaTopic('recursion')">♻️ Recursion</button>
+        <button class="topic-tab"       data-topic="trees"       onclick="setDsaTopic('trees')">🌳 Trees</button>
+        <button class="topic-tab"       data-topic="graphs"      onclick="setDsaTopic('graphs')">🕸️ Graphs</button>
+        <button class="topic-tab"       data-topic="dp"          onclick="setDsaTopic('dp')">🧩 Dynamic Programming</button>
+        <button class="topic-tab"       data-topic="sorting"     onclick="setDsaTopic('sorting')">⚡ Sorting</button>
+      </div>
+
+      <div class="video-grid" id="video-grid"></div>
+    </section>
+
+    <!-- ══════════════════════════════════
+         APTITUDE QUIZ
+         ══════════════════════════════════ -->
+    <section class="section-page" id="page-aptitude">
+      <div id="aptitude-view"></div>
+    </section>
+
+    <!-- ══════════════════════════════════
+         CODING PRACTICE
+         ══════════════════════════════════ -->
+    <section class="section-page" id="page-coding">
+
+      <div class="page-heading" style="margin-bottom:16px">
+        <h2>Coding Practice</h2>
+        <p>Solve classic interview problems with hints and solutions</p>
+      </div>
+
+      <div id="coding-view"></div>
+    </section>
+
+    <!-- ══════════════════════════════════
+         INTERVIEW PREP
+         ══════════════════════════════════ -->
+    <section class="section-page" id="page-interview">
+
+      <div class="page-heading">
+        <h2>Interview Preparation</h2>
+        <p>HR, Technical & System Design questions with expert answers</p>
+      </div>
+
+      <div id="interview-view"></div>
+    </section>
+
+    <!-- ══════════════════════════════════
+         RESUME BUILDER
+         ══════════════════════════════════ -->
+    <section class="section-page" id="page-resume">
+
+      <div class="page-heading">
+        <h2>Resume Builder</h2>
+        <p>Fill in the form to see your live ATS-friendly resume preview</p>
+      </div>
+
+      <div class="resume-layout">
+
+        <!-- Form Column -->
+        <div class="resume-form-column" style="display:flex;flex-direction:column;gap:14px;max-height:calc(100vh - 200px);overflow-y:auto;padding-right:4px">
+
+          <!-- Personal Info -->
+          <div class="glass-card no-reveal" style="padding:20px">
+            <div class="form-section-title">👤 Personal Information</div>
+            <div class="form-group">
+              <label class="form-label">Full Name *</label>
+              <input class="form-input" id="r-name" placeholder="Priya Sharma" oninput="updateResume()">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input class="form-input" id="r-email" placeholder="priya@email.com" type="email" oninput="updateResume()">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Phone</label>
+                <input class="form-input" id="r-phone" placeholder="+91 98765 43210" oninput="updateResume()">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">LinkedIn Profile</label>
+              <input class="form-input" id="r-linkedin" placeholder="linkedin.com/in/priyasharma" oninput="updateResume()">
+            </div>
+          </div>
+
+          <!-- Education -->
+          <div class="glass-card no-reveal" style="padding:20px">
+            <div class="form-section-title">🎓 Education</div>
+            <div class="form-group">
+              <label class="form-label">University / College</label>
+              <input class="form-input" id="r-uni" placeholder="Sharda University, Greater Noida" oninput="updateResume()">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Graduation Year</label>
+                <input class="form-input" id="r-grad" placeholder="2025" oninput="updateResume()">
+              </div>
+              <div class="form-group">
+                <label class="form-label">CGPA</label>
+                <input class="form-input" id="r-cgpa" placeholder="8.5" oninput="updateResume()">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Degree & Branch</label>
+              <input class="form-input" id="r-branch" placeholder="B.Tech in Computer Science & Engineering" oninput="updateResume()">
+            </div>
+          </div>
+
+          <!-- Skills -->
+          <div class="glass-card no-reveal" style="padding:20px">
+            <div class="form-section-title">⚙️ Technical Skills</div>
+            <div class="form-group">
+              <label class="form-label">Skills (comma-separated)</label>
+              <textarea class="form-textarea" id="r-skills" rows="3" placeholder="Java, Python, React, SQL, DSA, System Design, Git, AWS" oninput="updateResume()"></textarea>
+            </div>
+          </div>
+
+          <!-- Experience -->
+          <div class="glass-card no-reveal" style="padding:20px">
+            <div class="form-section-title">💼 Experience (Optional)</div>
+            <div class="form-group">
+              <label class="form-label">Internship / Work Experience</label>
+              <textarea class="form-textarea" id="r-exp1" rows="3" placeholder="SDE Intern at Startup XYZ (May–Jul 2024): Built REST APIs in Node.js..." oninput="updateResume()"></textarea>
+            </div>
+          </div>
+
+          <!-- Projects -->
+          <div class="glass-card no-reveal" style="padding:20px">
+            <div class="form-section-title">🛠️ Projects</div>
+            <div class="form-row" style="margin-bottom:8px">
+              <div class="form-group">
+                <label class="form-label">Project 1 Name</label>
+                <input class="form-input" id="r-proj1" placeholder="PrepPro Portal" oninput="updateResume()">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Technologies</label>
+                <input class="form-input" id="r-proj1tech" placeholder="HTML, CSS, JS" oninput="updateResume()">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Description (one point per line)</label>
+              <textarea class="form-textarea" id="r-proj1desc" rows="3" placeholder="Built a full-stack placement prep portal&#10;Integrated LocalStorage for persistent tracking&#10;Achieved 95% positive user feedback" oninput="updateResume()"></textarea>
+            </div>
+            <div class="form-row" style="margin-top:12px;margin-bottom:8px">
+              <div class="form-group">
+                <label class="form-label">Project 2 Name</label>
+                <input class="form-input" id="r-proj2" placeholder="E-Commerce App" oninput="updateResume()">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Technologies</label>
+                <input class="form-input" id="r-proj2tech" placeholder="React, Node.js, MongoDB" oninput="updateResume()">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Description</label>
+              <textarea class="form-textarea" id="r-proj2desc" rows="3" placeholder="Project description..." oninput="updateResume()"></textarea>
+            </div>
+          </div>
+
+          <!-- Achievements -->
+          <div class="glass-card no-reveal" style="padding:20px">
+            <div class="form-section-title">🏆 Achievements</div>
+            <div class="form-group">
+              <label class="form-label">Achievements (one per line)</label>
+              <textarea class="form-textarea" id="r-achieve" rows="3" placeholder="LeetCode 500+ problems solved&#10;2nd place in College Hackathon 2024&#10;Google DSC Core Team Member" oninput="updateResume()"></textarea>
+            </div>
+          </div>
+
+          <button class="btn btn-primary" onclick="downloadResume()" style="width:100%;justify-content:center;padding:14px;font-size:0.95rem">
+            ⬇️ Download Resume as PDF
+          </button>
+        </div>
+
+        <!-- Live Preview -->
+        <div class="resume-preview">
+          <div class="resume-preview-header">
+            <span class="resume-preview-title">📄 Live Preview</span>
+            <div style="display:flex;gap:6px">
+              <div style="width:10px;height:10px;border-radius:50%;background:#ef4444"></div>
+              <div style="width:10px;height:10px;border-radius:50%;background:#f59e0b"></div>
+              <div style="width:10px;height:10px;border-radius:50%;background:#10b981"></div>
+            </div>
+          </div>
+          <div id="resume-content">
+            <h1>Your Name</h1>
+            <div class="contact-line">email@example.com | +91 XXXXX XXXXX | linkedin.com/in/yourprofile</div>
+            <h2>Education</h2>
+            <div class="entry">
+              <div class="entry-header"><span>University Name</span><span>2024</span></div>
+              <div class="entry-sub">B.Tech in Computer Science | CGPA: 8.0</div>
+            </div>
+            <h2>Technical Skills</h2>
+            <div>Java, Python, C++, Data Structures, SQL, HTML/CSS/JS, Git</div>
+            <h2>Projects</h2>
+            <div class="entry">
+              <div class="entry-header"><span>Project Name</span><span>Technologies</span></div>
+              <ul><li>Project description point 1</li><li>Project description point 2</li></ul>
+            </div>
+            <h2>Achievements</h2>
+            <ul><li>Achievement 1</li><li>Achievement 2</li></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════
+         COMPANY INTEL
+         ══════════════════════════════════ -->
+    <section class="section-page" id="page-companies">
+
+      <div class="page-heading">
+        <h2>Company Intelligence</h2>
+        <p>Know exactly what each company expects in their hiring process</p>
+      </div>
+
+      <!-- Filter Bar -->
+      <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;align-items:center">
+        <button class="topic-tab active" onclick="filterCompanies('all',this)">All (12)</button>
+        <button class="topic-tab" onclick="filterCompanies('Easy',this)">🟢 Easy</button>
+        <button class="topic-tab" onclick="filterCompanies('Medium',this)">🟡 Medium</button>
+        <button class="topic-tab" onclick="filterCompanies('Hard',this)">🔴 Hard</button>
+        <button class="topic-tab" onclick="filterCompanies('IT Services',this)">🏭 IT Services</button>
+        <button class="topic-tab" onclick="filterCompanies('Tech',this)">💻 Tech</button>
+        <button class="topic-tab" onclick="filterCompanies('Fintech',this)">💳 Fintech</button>
+      </div>
+
+      <div class="companies-grid" id="companies-grid"></div>
+    </section>
+
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
